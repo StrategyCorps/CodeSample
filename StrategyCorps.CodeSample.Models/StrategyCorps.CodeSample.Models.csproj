@@ -48,13 +48,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Movies\AlternativeMovieTitleSearchResponseDto.cs" />
+    <Compile Include="Movies\MovieTitleDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TelevisionResultDto.cs" />
-    <Compile Include="TelevisionSearchResponseDto.cs" />
+    <Compile Include="Television\TelevisionResultDto.cs" />
+    <Compile Include="Television\TelevisionSearchResponseDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

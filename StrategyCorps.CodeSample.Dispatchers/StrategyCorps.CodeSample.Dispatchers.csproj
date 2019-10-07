@@ -70,9 +70,11 @@
   <ItemGroup>
     <Compile Include="MappingProfiles\TheMovieDbMappingProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\TheMovieDB\Model\Movies\AlternativeMovieTitleSearchResponse.cs" />
+    <Compile Include="Providers\TheMovieDB\Model\Movies\MovieTitle.cs" />
     <Compile Include="Providers\TheMovieDB\Model\GenreId.cs" />
-    <Compile Include="Providers\TheMovieDB\Model\TelevisionResult.cs" />
-    <Compile Include="Providers\TheMovieDB\Model\TelevisionSearchResponse.cs" />
+    <Compile Include="Providers\TheMovieDB\Model\Television\TelevisionResult.cs" />
+    <Compile Include="Providers\TheMovieDB\Model\Television\TelevisionSearchResponse.cs" />
     <Compile Include="Registries\DefaultDispatchersRegistry.cs" />
     <Compile Include="StartUp.cs" />
     <Compile Include="Providers\TheMovieDB\TheMovieDbDispatcher.cs" />

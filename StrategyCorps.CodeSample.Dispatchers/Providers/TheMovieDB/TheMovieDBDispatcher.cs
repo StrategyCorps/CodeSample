@@ -9,6 +9,7 @@ using StrategyCorps.CodeSample.Dispatchers.Providers.TheMovieDB.Model;
 using StrategyCorps.CodeSample.Interfaces.Dispatchers;
 using StrategyCorps.CodeSample.Models;
 using StrategyCorps.CodeSample.Core.Exceptions;
+using StrategyCorps.CodeSample.Dispatchers.Providers.TheMovieDB.Model.Movies;
 
 namespace StrategyCorps.CodeSample.Dispatchers.Providers.TheMovieDB
 {
@@ -99,6 +100,42 @@ namespace StrategyCorps.CodeSample.Dispatchers.Providers.TheMovieDB
         }
 
         /// <summary>
+        /// Gets alternative titles for the movie id that is passed in
+        /// </summary>
+        /// <param name="id">The id of the movie used to query its alternative titles </param>
+        /// <returns cref="AlternativeTitleSearchResponseDto"></returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="StrategyCorpsException"></exception>
+        /// <exception cref="Exception"></exception>
+        public AlternativeMovieTitleSearchResponseDto GetAlternativeMovieTitlesById(int id)
+        {
+            if (id <= 0) throw new ArgumentException("The id  must be greater than 0.", nameof(id));
+
+            IRestResponse response;
+
+            var request = new RestRequest
+            {
+                Method = Method.GET,
+                Resource = $"3/movie/{id}/alternative_titles?api_key={TheMovieDbApiKey}",
+                RequestFormat = DataFormat.Json
+            };
+
+            try
+            {
+                _restClient.BaseUrl = new Uri(TheMovieDbBaseUrl);
+
+                response = _restClient.Execute(request);
+            }
+            catch (Exception exception)
+            {
+                _logger.Error(exception);
+                throw;
+            }
+
+            return MapGetAlternativeMovieTitlesResponse(response);
+        }
+
+        /// <summary>
         /// Maps the rest response from the get television shows request
         /// </summary>
         /// <param name="response" cref="IRestResponse">The rest response from the rest request. </param>
@@ -111,6 +148,26 @@ namespace StrategyCorps.CodeSample.Dispatchers.Providers.TheMovieDB
                 case HttpStatusCode.OK:
                     var televisionSearchResponse = JsonConvert.DeserializeObject<TelevisionSearchResponse>(response.Content);
                     return _mapper.Map<TelevisionSearchResponse, TelevisionSearchResponseDto>(televisionSearchResponse);
+                case HttpStatusCode.NotFound:
+                    return null;
+                default:
+                    throw new StrategyCorpsException("There was a problem calling The Movie Db.", ErrorCode.Unknown, null);
+            }
+        }
+
+        /// <summary>
+        /// Maps the rest response from the get alternative movie titles request
+        /// </summary>
+        /// <param name="response" cref="IRestResponse">The rest response from the rest request. </param>
+        /// <returns cref="AlternativeMovieTitleSearchResponseDto"></returns>
+        /// <exception cref="StrategyCorpsException"></exception>
+        private AlternativeMovieTitleSearchResponseDto MapGetAlternativeMovieTitlesResponse(IRestResponse response)
+        {
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                    var alternativeMovieTitleSearchResponse = JsonConvert.DeserializeObject<AlternativeMovieTitleSearchResponse>(response.Content);
+                    return _mapper.Map<AlternativeMovieTitleSearchResponse, AlternativeMovieTitleSearchResponseDto>(alternativeMovieTitleSearchResponse);
                 case HttpStatusCode.NotFound:
                     return null;
                 default:

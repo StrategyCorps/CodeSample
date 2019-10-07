@@ -7,7 +7,9 @@ using FizzWare.NBuilder;
 using NUnit.Framework;
 using StrategyCorps.CodeSample.Dispatchers.MappingProfiles;
 using StrategyCorps.CodeSample.Dispatchers.Providers.TheMovieDB.Model;
+using StrategyCorps.CodeSample.Dispatchers.Providers.TheMovieDB.Model.Movies;
 using StrategyCorps.CodeSample.Models;
+using StrategyCorps.CodeSample.Models.Movies;
 
 namespace StrategyCorps.CodeSample.Dispatchers.Tests.MappingProfiles
 {
@@ -78,6 +80,44 @@ namespace StrategyCorps.CodeSample.Dispatchers.Tests.MappingProfiles
                                                                    .With(x => x.VoteCount = televisionResult.VoteCount).Build();
 
             var actualResult = _mapper.Map<TelevisionResult, TelevisionResultDto>(televisionResult);
+
+            actualResult.ToExpectedObject().ShouldEqual(expectedResult);
+        }
+
+        [Test]
+        public void DefaultMappingProfile_When_MovieTitle_Returns_MovieTitleDto()
+        {
+            var movieTitleResult = Builder<MovieTitle>.CreateNew().Build();
+            var expectedResult = Builder<MovieTitleDto>.CreateNew()
+                                                        .With(x => x.CountryCode = movieTitleResult.CountryCode)
+                                                        .With(x => x.Title = movieTitleResult.Title)
+                                                        .With(x => x.Type = movieTitleResult.Type).Build();
+
+            var actualResult = _mapper.Map<MovieTitle, MovieTitleDto>(movieTitleResult);
+
+            actualResult.ToExpectedObject().ShouldEqual(expectedResult);
+        }
+
+        [Test]
+        public void DefaultMappingProfile_When_AlternativeMovieTitleSearchResponse_Returns_AlternativeMovieTitleSearchResponseDTO()
+        {
+            var currentDateTime = DateTime.Now;
+            var movieTitleResults = Builder<MovieTitle>.CreateListOfSize(5).All().Build().ToList();
+            var alternativeMovieTitleSearchResponse = Builder<AlternativeMovieTitleSearchResponse>.CreateNew()
+                                                                                  .With(x => x.Titles = movieTitleResults).Build();
+
+            var movieTitleDtos = movieTitleResults.Select(movieTitle => new MovieTitleDto
+            {
+                CountryCode = movieTitle.CountryCode,
+                Title = movieTitle.Title,
+                Type = movieTitle.Type,
+            }).ToList();
+
+            var expectedResult = Builder<AlternativeMovieTitleSearchResponseDto>.CreateNew()
+                                                                           .With(x => x.Id = alternativeMovieTitleSearchResponse.Id)
+                                                                           .With(x => x.Titles = movieTitleDtos).Build();
+
+            var actualResult = _mapper.Map<AlternativeMovieTitleSearchResponse, AlternativeMovieTitleSearchResponseDto>(alternativeMovieTitleSearchResponse);
 
             actualResult.ToExpectedObject().ShouldEqual(expectedResult);
         }

@@ -184,6 +184,7 @@
     <Compile Include="App_Start\StructuremapWebApi.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\TelevisionController.cs" />
     <Compile Include="DependencyResolution\DefaultWebApiRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -196,8 +197,10 @@
     </Compile>
     <Compile Include="MappingProfiles\DefaultMappingProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\TelevisionResultViewModel.cs" />
-    <Compile Include="ViewModels\TelevisionSearchResponseViewModel.cs" />
+    <Compile Include="ViewModels\Movies\AlternativeMovieTitleSearchResponseViewModel.cs" />
+    <Compile Include="ViewModels\Movies\MovieTitleViewModel.cs" />
+    <Compile Include="ViewModels\Television\TelevisionResultViewModel.cs" />
+    <Compile Include="ViewModels\Television\TelevisionSearchResponseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />

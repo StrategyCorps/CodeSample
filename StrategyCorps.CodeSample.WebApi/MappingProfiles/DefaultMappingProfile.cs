@@ -1,7 +1,9 @@
 ﻿using System.Globalization;
 using AutoMapper;
 using StrategyCorps.CodeSample.Models;
+using StrategyCorps.CodeSample.Models.Movies;
 using StrategyCorps.CodeSample.WebApi.ViewModels;
+using StrategyCorps.CodeSample.WebApi.ViewModels.Movies;
 
 namespace StrategyCorps.CodeSample.WebApi.MappingProfiles
 {
@@ -18,6 +20,8 @@ namespace StrategyCorps.CodeSample.WebApi.MappingProfiles
             CreateMap<TelevisionResultDto, TelevisionResultViewModel>()
                 .ForMember(destination => destination.FirstAirDate, options => options.MapFrom(source => source.FirstAirDate.ToString(CultureInfo.InvariantCulture)));
             CreateMap<TelevisionSearchResponseDto, TelevisionSearchResponseViewModel>();
+            CreateMap<MovieTitleDto, MovieTitleViewModel>();
+            CreateMap<AlternativeMovieTitleSearchResponseDto, AlternativeMovieTitleSearchResponseViewModel>();
         }
     }
 }
