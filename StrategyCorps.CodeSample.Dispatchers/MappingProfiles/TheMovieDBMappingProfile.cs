@@ -13,6 +13,9 @@ namespace StrategyCorps.CodeSample.Dispatchers.MappingProfiles
             CreateMap<TelevisionResult, TelevisionResultDto>()
                 .ForMember(destination => destination.FirstAirDate, options => options.MapFrom(source => DateTime.Parse(source.FirstAirDate, CultureInfo.CurrentCulture)));
             CreateMap<TelevisionSearchResponse, TelevisionSearchResponseDto>();
+
+            CreateMap<MovieResult, MovieResultDto>().ForMember(destination => destination.ReleaseDate, options => options.MapFrom(source => DateTime.Parse(source.ReleaseDate, CultureInfo.CurrentCulture)));
+            CreateMap<MovieSearchResponse, MovieSearchResponseDto>();
         }
     }
 }

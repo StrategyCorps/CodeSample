@@ -49,7 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MoveResultDto.cs" />
     <Compile Include="TelevisionResultDto.cs" />
+    <Compile Include="MovieSearchResponseDto.cs" />
     <Compile Include="TelevisionSearchResponseDto.cs" />
   </ItemGroup>
   <ItemGroup>
